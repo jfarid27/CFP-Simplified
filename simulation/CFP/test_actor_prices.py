@@ -1,4 +1,4 @@
-import simulation.CFP.Actor as Actor
+import CFP.Actor as Actor
 import pytest
 
 @pytest.fixture
