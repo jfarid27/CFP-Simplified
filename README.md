@@ -10,7 +10,7 @@ To Start:
 1. Create a virtual envirionment using virtualenv and source the environment.
 
 ```bash
-virtualenv -p Python3 modules
+virtualenv -p python3 modules
 source modules/bin/activate
 ```
 
