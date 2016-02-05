@@ -1,7 +1,8 @@
 module Network (
    Network,
    Nodes,
-   Edges
+   Edges,
+   updateNode
 ) where
 
 import qualified Data.Map as Mapper
@@ -13,8 +14,18 @@ newtype Edges = Edges { getEdges :: Mapper.Map Id [Id] }
 
 newtype Network a = Network { getNetwork :: (Nodes a, Edges) }
 
-nearestNeighbors :: Network a -> Id -> [Id]
-nearestNeighbors = undefined
+nearestNeighbors :: Network a -> Id -> Maybe [Id]
+nearestNeighbors (Network (Nodes nodes, Edges edges)) id = Mapper.lookup id edges
+
+createNode :: Network a -> Id -> Node a -> Network a
+createNode (Network (Nodes nodes, edges)) id node = Network (Nodes $ Mapper.insert id node nodes, edges)
+
+readNode :: Network a -> Id -> Maybe (Node a)
+readNode (Network (Nodes nodes, _)) id = Mapper.lookup id nodes
 
 updateNode :: Network a -> Id -> Node a -> Network a
-updateNode = undefined
+updateNode (Network (Nodes nodes, edges)) id node = Network (Nodes $ Mapper.insert id node nodes', edges)
+    where nodes' = Mapper.filterWithKey (\k a -> k == id) nodes
+
+deleteNode :: Network a -> Id -> Network a
+deleteNode = undefined
