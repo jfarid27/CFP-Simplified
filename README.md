@@ -10,7 +10,7 @@ To Start:
 1. Create a virtual envirionment using virtualenv and source the environment.
 
 ```bash
-virtualenv -p Python3 modules
+virtualenv -p python3 modules
 source modules/bin/activate
 ```
 
@@ -22,7 +22,7 @@ pip install -r requirements.txt
 ### Testing
 
 ##### Simulation Tests
-Navigate to the 'simulation' folder in the virtual environment and test with
+While in the virtual environment, test with
 ```bash
-py.test
+py.test --ignore=modules/
 ```
