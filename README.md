@@ -22,7 +22,7 @@ pip install -r requirements.txt
 ### Testing
 
 ##### Simulation Tests
-Navigate to the 'simulation' folder in the virtual environment and test with
+While in the virtual environment, test with
 ```bash
-py.test
+py.test --ignore=modules/
 ```
