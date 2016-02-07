@@ -43,4 +43,5 @@ class BarabasiScaleFree(Network):
         for n in range(self.numNodes):
             if (self.uniformRandomNumber() <= self.attachProbability(n)):
                 self.addEdge(i, n)
+                self.addEdge(n, i)
                 self.numEdges += 1
