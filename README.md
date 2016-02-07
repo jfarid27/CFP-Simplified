@@ -1,4 +1,4 @@
-CFP-Simplified [![Build Status](https://travis-ci.org/jfarid27/CFP-Simplified.svg?branch=master)](https://travis-ci.org/jfarid27/CFP-Simplified)
+# CFP-Simplified [![Build Status](https://travis-ci.org/jfarid27/CFP-Simplified.svg?branch=master)](https://travis-ci.org/jfarid27/CFP-Simplified)
 
 ### Build
 
