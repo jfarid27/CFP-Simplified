@@ -24,13 +24,12 @@ class BarabasiScaleFree(Network):
         self.numEdges = 0
     
     def attachProbability(self, index):
-        if index not in self.edges:
+        if index not in self.edges or (self.numEdges == 0):
             return .5
         return float(len(self.edges[index])) / self.numEdges
 
     def build(self, numNodes, nodeGenerator):
         for n in range(numNodes):
-            print(n)
             self.attachPreferentially(n) 
             self.addNode(n, nodeGenerator(n))
             self.numNodes += 1

@@ -1,4 +1,4 @@
-import Networks.Networks as Networks
+import simulation.Networks.Networks as Networks
 import pytest
 
 mockNodes = {1: {"name": "foo"}, 2:{"name": "bar"}}
