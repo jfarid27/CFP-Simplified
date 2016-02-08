@@ -17,13 +17,16 @@ source modules/bin/activate
 ```
 
 2. Download dependencies
-```bash`
+```bash
 pip install -r requirements.txt 
 ```
 
-### Testing
+3. To run the Jupyter notebook and explore included notebooks
+```bash
+pip install -r notebook-requirements.txt 
+```
 
-##### Simulation Tests
+### Testing
 While in the virtual environment, test with
 ```bash
 py.test --ignore=modules/
