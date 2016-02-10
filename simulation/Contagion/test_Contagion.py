@@ -24,7 +24,7 @@ def mockContagionSystem():
 
 @pytest.fixture
 def mockWolffSystem():
-    return Contagion.WolffIsing(mockNetwork)
+    return Contagion.WolffIsing(mockNetwork2)
 
 def test_spread(mockContagionSystem):
     mockContagionSystem.spread({}, [], {}, 1)
@@ -35,7 +35,8 @@ def test_spread(mockContagionSystem):
 
 def test_wolff_spread(mockWolffSystem):
     mockWolffSystem.aggrSpread({}, [], {'spin': -1}, 1)
-    assert mockNodes[1]["spin"] == -1
-    assert mockNodes[2]["spin"] == -1
-    assert mockNodes[3]["spin"] == -1
-    assert mockNodes[4]["spin"] == -1
+    assert mockNodes2[1]["spin"] == -1
+    assert mockNodes2[2]["spin"] == -1
+    assert mockNodes2[3]["spin"] == -1
+    assert mockNodes2[4]["spin"] == -1
+    assert mockNodes2[5]["spin"] == 1
