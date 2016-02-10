@@ -50,4 +50,4 @@ class WolffIsing(Contagion):
         receiver['spin'] = conditions['spin']
     
     def canBeInfected(self, conditions, receiver):
-        return receiver['spin'] == conditions['spin']
+        return receiver['spin'] != conditions['spin']
