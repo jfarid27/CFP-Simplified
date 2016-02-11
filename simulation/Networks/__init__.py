@@ -17,18 +17,27 @@ class Network():
 
 class BarabasiScaleFree(Network):
     def __init__(self, uniformRandomNumber, nodes={}, edges={}):
+        """Generates the initial empty network to start generation of a scale-free
+           network based on the Barabasi-Albert model
+        """
         self.nodes = nodes
         self.edges = edges
         self.uniformRandomNumber = uniformRandomNumber
-        self.numNodes = 0
-        self.numEdges = 0
+        self.numNodes = len(nodes.keys())
+        self.numEdges = sum(len(edges[index]) for index in edges.keys())
     
     def attachProbability(self, index):
+        """Barabasi-Albert growth rule for edge attachment probability based on the
+           preferential attachment.
+        """
         if index not in self.edges or (self.numEdges == 0):
             return .5
         return float(len(self.edges[index])) / self.numEdges
 
     def build(self, numNodes, nodeGenerator):
+        """Generate a network with numNodes nodes using nodeGenerator, which takes
+           a nodeId and should return a dictionary representing the node data.
+        """
         for n in range(numNodes):
             self.attachPreferentially(n) 
             self.addNode(n, nodeGenerator(n))
