@@ -17,6 +17,9 @@ def mockNewNetwork():
 def mockBarabasi():
     return Networks.BarabasiScaleFree(uniformRandomNumber=mockUniformRandomNumber)
 
+@pytest.fixture(scope="function")
+def mockLattice2DNP():
+    return Networks.Lattice2DNP(2, 2)
 
 ##Instantiation Test
 class TestNetwork():
@@ -34,6 +37,26 @@ class TestNetwork():
         mockNewNetwork.addEdge(2, 1)
         assert 0 in mockNewNetwork.edges[2]
         assert 1 in mockNewNetwork.edges[2]
+
+class TestLattice2DNP():
+    def test_smallInstance(self, mockLattice2DNP):
+        mockLattice2DNP.build(lambda x,y: {})
+        #0
+        assert 1 in mockLattice2DNP.edges[0]
+        assert 2 in mockLattice2DNP.edges[0]
+        assert len(mockLattice2DNP.edges[0]) == 2
+        #1
+        assert 0 in mockLattice2DNP.edges[1]
+        assert 3 in mockLattice2DNP.edges[1]
+        assert len(mockLattice2DNP.edges[1]) == 2
+        #2
+        assert 0 in mockLattice2DNP.edges[2]
+        assert 3 in mockLattice2DNP.edges[2]
+        assert len(mockLattice2DNP.edges[2]) == 2
+        #3
+        assert 1 in mockLattice2DNP.edges[3]
+        assert 2 in mockLattice2DNP.edges[3]
+        assert len(mockLattice2DNP.edges[3]) == 2
 
 ##Barabasi Network Tests
 class TestBarabasi():

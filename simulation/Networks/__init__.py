@@ -15,6 +15,37 @@ class Network():
         else:
             self.edges[index] = [indexTo]
 
+class Lattice2D(Network):
+    def __init__(self, numRows, numCols, nodes={}, edges={}):
+        """Generate a 2D lattice"""
+        self.numRows = numRows
+        self.numCols = numCols
+        self.nodes = nodes
+        self.edges = edges
+    
+    def build(self, nodeGenerator):
+        for j in range(self.numRows):
+            for k in range(self.numCols):
+                index = k + (self.numCols * j)
+                self.addNode(index, nodeGenerator(j, k))
+                self.attachHorizontalNeighbor(j, k)
+                self.attachVerticalNeighbor(j, k)
+
+class Lattice2DNP(Lattice2D):
+    def attachHorizontalNeighbor(self, row, column): 
+        if column != 0:
+            index = column + (self.numCols * row)
+            leftIndex = column + (self.numCols * row) - 1
+            self.addEdge(leftIndex, index)
+            self.addEdge(index, leftIndex)
+    
+    def attachVerticalNeighbor(self, row, column): 
+        if row != 0:
+            index = column + (self.numCols * row)
+            topIndex = (column) + (self.numCols * (row - 1))
+            self.addEdge(topIndex, index)
+            self.addEdge(index, topIndex)
+
 class BarabasiScaleFree(Network):
     def __init__(self, uniformRandomNumber, nodes={}, edges={}):
         """Generates the initial empty network to start generation of a scale-free
