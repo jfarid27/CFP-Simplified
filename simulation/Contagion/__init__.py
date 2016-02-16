@@ -1,3 +1,5 @@
+from math import exp
+
 class Contagion():
     def __init__(self, network, canBeInfected, tryToInfect, infect):
         self.network = network 
@@ -40,14 +42,18 @@ class Contagion():
 
 class WolffIsing(Contagion):
     """Used to create an infection model that matches the Wolff Ising program, flipping
-       all matching neighbors spins automatically. This class is meant to be used with the
-       aggrSpread when a node is selected to be flipped.
-    """
-    def __init__(self, network):
+       all matching neighbors spins using Wolff spread probability."""
+    def __init__(self, network, beta, randomNumGen):
+        self.beta = beta
         self.network = network
+        self.randomNumGen = randomNumGen
     
     def infect(self, conditions, receiver):
         receiver['spin'] = conditions['spin']
     
     def canBeInfected(self, conditions, receiver):
         return receiver['spin'] != conditions['spin']
+    
+    def tryToInfect(self, transmitter, receiver):
+        wolfSpreadProbability = 1 - exp( - 2 * self.beta)
+        return wolfSpreadProbability < self.randomNumGen()

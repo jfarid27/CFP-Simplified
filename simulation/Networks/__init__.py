@@ -22,6 +22,7 @@ class Lattice2D(Network):
         self.numCols = numCols
         self.nodes = nodes
         self.edges = edges
+        self.numNodes = numRows * numCols
     
     def build(self, nodeGenerator):
         for j in range(self.numRows):
