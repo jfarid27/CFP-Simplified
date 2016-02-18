@@ -1,6 +1,7 @@
 import random
 import os
 from math import sqrt
+from multiprocessing import Pool
 
 import simulation.Networks as Network
 import simulation.Contagion as Contagion
@@ -64,5 +65,7 @@ def experiment(temperature):
     openedFile.close()
     return observations
 
-temperatures = [float(x)/10 for x in range(1, 100)]
-[j for j in map(experiment, temperatures)]
+if __name__ == '__main__':
+    temperatures = [float(x)/10 for x in range(1, 50)]
+    p = Pool(len(temperatures))
+    p.map(experiment, temperatures)
