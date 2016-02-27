@@ -50,12 +50,15 @@ class Lattice2DNP(Lattice2D):
 class BarabasiScaleFree(Network):
     def __init__(self, uniformRandomNumber, nodes={}, edges={}):
         """Generates the initial empty network to start generation of a scale-free
-           network based on the Barabasi-Albert model
+           network based on the Barabasi-Albert model. Pass a new dictionary
+           for nodes and edges to keep a new state on initialization.
         """
         self.nodes = nodes
         self.edges = edges
         self.uniformRandomNumber = uniformRandomNumber
         self.numNodes = len(nodes.keys())
+        self.numRows = self.numNodes # These lines are added for the 
+        self.numCols = 0             # system.transition method
         self.numEdges = sum(len(edges[index]) for index in edges.keys())
     
     def attachProbability(self, index):
@@ -74,6 +77,7 @@ class BarabasiScaleFree(Network):
             self.attachPreferentially(n) 
             self.addNode(n, nodeGenerator(n))
             self.numNodes += 1
+            self.numRows += 1
     
     def attachPreferentially(self, i):
         """Preferentially attaches node with index i to nodes with index < i.
