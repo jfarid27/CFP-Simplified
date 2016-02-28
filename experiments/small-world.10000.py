@@ -1,5 +1,6 @@
 import random
 import os
+import sys
 from math import sqrt
 from multiprocessing import Pool
 
@@ -8,6 +9,8 @@ import simulation.Contagion as Contagion
 import simulation.System as System
 import simulation.MCMC as MCMC
 
+sys.path.insert(0, os.getcwd())
+sys.setrecursionlimit(100000)
 random.seed(int("54e22d", 16))
 
 steps = 1000000
