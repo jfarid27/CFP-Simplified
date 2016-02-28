@@ -71,6 +71,7 @@ class BarabasiScaleFree(Network):
            a nodeId and should return a dictionary representing the node data.
         """
         for n in range(numNodes):
+            self.edges[n] = []
             self.attachPreferentially(n) 
             self.addNode(n, nodeGenerator(n))
             self.numNodes += 1
