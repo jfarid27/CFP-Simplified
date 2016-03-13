@@ -57,3 +57,9 @@ class WolffIsing(Contagion):
     def tryToInfect(self, transmitter, receiver):
         wolfSpreadProbability = 1 - exp( - 2 * self.beta)
         return wolfSpreadProbability < self.randomNumGen()
+
+class WolffIsingCFP(WolffIsing):
+    """A Wolff Ising spread model that also has a price"""
+    def infect(self, conditions, receiver):
+        receiver['spin'] = conditions['spin']
+        receiver['price'] = conditions['price']

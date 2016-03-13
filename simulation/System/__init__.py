@@ -23,10 +23,16 @@ class WolffIsing(System):
         numNodes = self.wolffIsing.network.numRows + self.wolffIsing.network.numCols
         randomNodeId = self.randomIntGen(0, numNodes - 1)
         randomNode = self.wolffIsing.network.nodes[randomNodeId]
-        conditions = {'spin': -randomNode['spin']}
+        conditions = self.generateConditions(randomNode)
         randomNode['spin'] *= -1
         neighbors = [x for x in self.wolffIsing.network.edges[randomNodeId]]
         alreadyChecked = {}
         alreadyChecked[randomNodeId] = True
         self.wolffIsing.spread(alreadyChecked, neighbors, \
             conditions, randomNodeId)
+    def generateConditions(self, node):
+        return {'spin': -node['spin']}
+
+class WolffCFPSystem(WolffIsing):
+    def generateConditions(self, node):
+        return {'spin': -node['spin'], 'price': node['price']}
