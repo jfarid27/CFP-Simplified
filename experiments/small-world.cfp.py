@@ -14,7 +14,7 @@ sys.setrecursionlimit(100000)
 random.seed(int("54e22d", 16))
 
 steps = 1000000
-numNodes = 100
+numNodes = 10000
 meanPrice = 100
 
 
@@ -74,10 +74,8 @@ def experiment(temperature, network):
 if __name__ == '__main__':
     network = Network.BarabasiScaleFree(random.random, {}, {})
     network.build(numNodes, randomSpin)
-    quickTemps = [5, 4, 3, 2, 1]
-    #temperatures = [5, 4, 3, 2, 1]
+    temperatures = [5, 4, 3, 2, 1]
     #temperatures.extend([float(x)/10 for x in range(1, 50) if x not in quickTemps])
-    temperatures = [2.5]
     temperatures.reverse()
     experiments = map(experimentSingleNetwork(network), temperatures)
     results = [result for result in experiments]
