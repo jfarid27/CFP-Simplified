@@ -21,9 +21,10 @@ meanPrice = 100
 def observablesWrap(openedFile):
     def wrap(system, observations):
         observables(system, observations)
-        data = str.format("{},{},{},{}", observations['lastEnergy'], \
+        data = str.format("{},{},{},{},{},{}", observations['lastEnergy'], \
             observations['lastSqEnergy'], observations['lastMag'],\
-            observations['lastSqMag'])
+            observations['lastSqMag'], observations['lastPrice'],\
+            observations['lastSqPrice'])
         openedFile.write(data + '\n')
     return wrap
 
