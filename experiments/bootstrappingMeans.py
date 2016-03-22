@@ -1,6 +1,7 @@
 import os
 import sys
 sys.path.insert(0, os.getcwd())
+print(sys.path)
 
 import pandas as pd
 import analysis.Stats as Stats
@@ -11,7 +12,7 @@ random.seed(int("54e22d", 16))
 
 
 stats = Stats.Stats()
-bootstrapSteps = 100000
+bootstrapSteps = 1
 
 cols = ['energy', 'sqEnergy', 'mag', 'sqMag']
 
