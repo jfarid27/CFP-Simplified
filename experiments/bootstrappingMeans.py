@@ -12,7 +12,7 @@ cols = ['energy', 'sqEnergy', 'mag', 'sqMag']
 
 def generateBootstrappedMeanForColumn(filename, data):
     def closure(col):
-        dataFileName = str.format("{}.{}.csv", filename, col)
+        dataFileName = str.format("./data/bootstrap.{}.{}.csv", filename.rstrip('.csv'), col)
         dataFile = open(dataFileName, 'w')
         bootstraps = stats.bootstrapping(stats.mean, data[col], bootstrapSteps)
         for point in bootstraps:
