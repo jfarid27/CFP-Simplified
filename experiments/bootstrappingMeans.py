@@ -11,7 +11,7 @@ random.seed(int("54e22d", 16))
 
 
 stats = Stats.Stats()
-bootstrapSteps = 100
+bootstrapSteps = 100000
 
 cols = ['energy', 'sqEnergy', 'mag', 'sqMag']
 
