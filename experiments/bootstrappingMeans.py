@@ -14,7 +14,6 @@ def generateBootstrappedMeanForColumn(filename, data):
     def closure(col):
         dataFileName = str.format("{}.{}.csv", filename, col)
         dataFile = open(dataFileName, 'w')
-        print(data[col])
         bootstraps = stats.bootstrapping(stats.mean, data[col], bootstrapSteps)
         for point in bootstraps:
             dataFile.write(str.format("{}\n", point))
