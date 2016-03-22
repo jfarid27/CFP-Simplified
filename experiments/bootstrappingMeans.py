@@ -1,9 +1,14 @@
-import pandas as pd
+import os
+import sys
+sys.path.insert(0, os.getcwd())
 
+import pandas as pd
+import analysis.Stats as Stats
 import random
+
+
 random.seed(int("54e22d", 16))
 
-import analysis.Stats as Stats
 
 stats = Stats.Stats()
 bootstrapSteps = 100
