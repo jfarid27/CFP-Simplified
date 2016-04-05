@@ -19,11 +19,11 @@ def mockBarabasi():
 
 @pytest.fixture(scope="function")
 def mockLattice2DNP():
-    return Networks.Lattice2DNP(2, 2)
+    return Networks.Lattice2DNP(2, 2, {}, {})
 
 @pytest.fixture(scope="function")
 def mockLattice2DPeriodic():
-    return Networks.Lattice2DPeriodic(3, 3)
+    return Networks.Lattice2DPeriodic(3, 3,{},{})
 
 ##Instantiation Test
 class TestNetwork():
@@ -114,11 +114,11 @@ class TestLattice2DPeriodic():
         assert 1 in mockLattice2DPeriodic.edges[7]
         assert len(mockLattice2DPeriodic.edges[7]) == 4
         #8
-        assert 7 in mockLattice2DPeriodic.edges[7]
-        assert 6 in mockLattice2DPeriodic.edges[7]
-        assert 5 in mockLattice2DPeriodic.edges[7]
-        assert 2 in mockLattice2DPeriodic.edges[7]
-        assert len(mockLattice2DPeriodic.edges[7]) == 4
+        assert 7 in mockLattice2DPeriodic.edges[8]
+        assert 6 in mockLattice2DPeriodic.edges[8]
+        assert 5 in mockLattice2DPeriodic.edges[8]
+        assert 2 in mockLattice2DPeriodic.edges[8]
+        assert len(mockLattice2DPeriodic.edges[8]) == 4
 
 ##Barabasi Network Tests
 class TestBarabasi():

@@ -52,15 +52,19 @@ class Lattice2DPeriodic(Lattice2D):
     """Adds neighbor attachment functions to form a 2D periodic lattice"""
     def attachHorizontalNeighbor(self, row, column): 
         index = column + (self.numCols * row)
-        leftIndex = (column + (self.numCols * row) - 1) % self.numCols
-        rightIndex = (column + (self.numCols * row) + 1) % self.numCols
+        leftIndex = ( (column - 1) % self.numCols) + \
+            (self.numCols * row) 
+        rightIndex = ( (column + 1) % self.numCols) + \
+            (self.numCols * row)
         self.addEdge(index, leftIndex)
         self.addEdge(index, rightIndex)
     
     def attachVerticalNeighbor(self, row, column): 
         index = column + (self.numCols * row)
-        topIndex = ((column) + (self.numCols * (row + 1))) % self.numRows
-        bottomIndex = ((column) + (self.numCols * (row - 1))) % self.numRows
+        topIndex = (column) + \
+            (self.numCols * ((row - 1) % self.numRows)) 
+        bottomIndex = (column) + \
+            (self.numCols * ((row + 1) % self.numRows))
         self.addEdge(index, topIndex)
         self.addEdge(index, bottomIndex)
 
