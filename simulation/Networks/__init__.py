@@ -33,6 +33,7 @@ class Lattice2D(Network):
                 self.attachVerticalNeighbor(j, k)
 
 class Lattice2DNP(Lattice2D):
+    """Adds neighbor attachment functions to form a 2D Non-periodic lattice"""
     def attachHorizontalNeighbor(self, row, column): 
         if column != 0:
             index = column + (self.numCols * row)
@@ -46,6 +47,26 @@ class Lattice2DNP(Lattice2D):
             topIndex = (column) + (self.numCols * (row - 1))
             self.addEdge(topIndex, index)
             self.addEdge(index, topIndex)
+
+class Lattice2DPeriodic(Lattice2D):
+    """Adds neighbor attachment functions to form a 2D periodic lattice"""
+    def attachHorizontalNeighbor(self, row, column): 
+        index = column + (self.numCols * row)
+        leftIndex = ( (column - 1) % self.numCols) + \
+            (self.numCols * row) 
+        rightIndex = ( (column + 1) % self.numCols) + \
+            (self.numCols * row)
+        self.addEdge(index, leftIndex)
+        self.addEdge(index, rightIndex)
+    
+    def attachVerticalNeighbor(self, row, column): 
+        index = column + (self.numCols * row)
+        topIndex = (column) + \
+            (self.numCols * ((row - 1) % self.numRows)) 
+        bottomIndex = (column) + \
+            (self.numCols * ((row + 1) % self.numRows))
+        self.addEdge(index, topIndex)
+        self.addEdge(index, bottomIndex)
 
 class BarabasiScaleFree(Network):
     def __init__(self, uniformRandomNumber, nodes={}, edges={}):
