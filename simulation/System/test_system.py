@@ -15,7 +15,7 @@ def mockRandomIntGen(x, y):
     return 0
 
 def mockRandomNumGen():
-    return 1
+    return 0
 
 @pytest.fixture(scope="function")
 def mockIsingNetwork():
@@ -28,7 +28,7 @@ class TestWolffIsing():
     def test_genPossibleState(self, mockIsingNetwork):
         s = mockIsingNetwork.genPossibleState()
         assert s.prob() == 1
-    
+
     def test_transition(self, mockIsingNetwork):
         mockIsingNetwork.transition({})
         assert mockIsingNetwork.wolffIsing.network.nodes[0]['spin'] == -1

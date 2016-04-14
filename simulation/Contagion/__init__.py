@@ -2,9 +2,9 @@ from math import exp
 
 class Contagion():
     def __init__(self, network, canBeInfected, tryToInfect, infect):
-        self.network = network 
+        self.network = network
         self.canBeInfected = canBeInfected
-        self.tryToInfect = tryToInfect 
+        self.tryToInfect = tryToInfect
         self.infect = infect
 
     def aggrSpread(self, alreadyChecked, nodesLeft, conditions, receiverId):
@@ -22,7 +22,7 @@ class Contagion():
         else:
             nextNode = nodesLeft.pop()
             return self.aggrSpread(alreadyChecked, nodesLeft, conditions, nextNode)
-    
+
     def spread(self, alreadyChecked, nodesLeft, conditions, receiverId):
         """Infects neighbors using tryToInfect. Does not auto infect"""
         if receiverId not in alreadyChecked:
@@ -47,16 +47,17 @@ class WolffIsing(Contagion):
         self.beta = beta
         self.network = network
         self.randomNumGen = randomNumGen
-    
+
     def infect(self, conditions, receiver):
         receiver['spin'] = conditions['spin']
-    
+
     def canBeInfected(self, conditions, receiver):
         return receiver['spin'] != conditions['spin']
-    
+
     def tryToInfect(self, transmitter, receiver):
+        """Uses Wolff spread probability to transmit infection"""
         wolfSpreadProbability = 1 - exp( - 2 * self.beta)
-        return wolfSpreadProbability < self.randomNumGen()
+        return self.randomNumGen() < wolfSpreadProbability
 
 class WolffIsingCFP(WolffIsing):
     """A Wolff Ising spread model that also has a price"""
