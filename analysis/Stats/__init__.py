@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import pandas as pd
 from math import log, floor, exp
 
 random.seed(int("54e22d", 16))
@@ -20,25 +21,45 @@ class Stats():
 
     def weightedMean(self, t, data):
         """Computes weighted mean using exponential energy distribution"""
-        return reduce(lambda agg, x: agg + ( x * exp(- x / float(t))  ), samples, 0)
+        M = 0
+        for point in data:
+            M += point * exp(- point / float(t))
+        return M
 
     def partitionF(self, t, data):
         """Generalized Z partition function"""
-        return reduce(lambda agg, x: agg + ( exp(- x / float(t))  ), samples, 0)
+        Z = 0
+        for point in data:
+            Z += exp(- point / float(t))
+        return Z
 
-    def specificHeat(self, data, sqData, temperature, n):
-        Z2 = weightedMean(temperature, sqData) / partitionF(temperature, data)
-        Z =  (weightedMean(temperature, data) ** 2) / partitionF(temperature, data)
+    def specificHeat(self, data, temperature, n):
+        min = 0
+        for energy in data:
+            if (energy < min):
+                min = energy
+        shiftedData = data.map(lambda x: x - min)
+        sqShiftedData = shiftedData.map(lambda x: x ** 2)
+        P = self.partitionF(temperature, shiftedData)
+        Z2 = self.weightedMean(temperature, sqShiftedData) / P
+        Z =  (self.weightedMean(temperature, shiftedData) ** 2) / P
         return ( Z2 - (Z ** 2) ) / ((temperature ** 2) * n)
 
     def computeLogReturns(self, back, ahead):
         return np.divide(back, ahead).map(log)
 
-    def computeSpecificHeats(self, dataStrWithArbTemp, cols, temperatures):
+    def computeSpecificHeats(self, dataStrWithArbTemp, cols, temperatures, numIsingSpins):
         points = []
         for temperature in temperatures:
             location = str.format(dataStrWithArbTemp, temperature)
             data = pd.read_csv(location, header=None)
             data.columns = cols
-            points.append(specificHeat(data['energy'], data['sqEnergy'], temperature, numIsingSpins))
+            points.append((self.specificHeat(data['energy'], temperature, numIsingSpins), temperature))
         return points
+
+if __name__ == "__main__":
+    stats = Stats()
+    cols = ['energy', 'sqEnergy', 'mag', 'sqMag']
+    allTemperatures = [float(x)/5 for x in range(1, 25)]
+    k = stats.computeSpecificHeats('./data/ising.random.periodic.100.{}.csv', cols, allTemperatures, 100*100)
+    print(k)
