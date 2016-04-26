@@ -26,6 +26,12 @@ class Stats():
             M += point * exp(- point / float(t))
         return M
 
+    def weightedSqMean(self, t, data):
+        M = 0
+        for point in data:
+            M += (point ** 2) * exp(- point / float(t))
+        return M
+
     def partitionF(self, t, data):
         """Generalized Z partition function"""
         Z = 0
@@ -39,10 +45,9 @@ class Stats():
             if (energy < min):
                 min = energy
         shiftedData = data.map(lambda x: x - min)
-        sqShiftedData = shiftedData.map(lambda x: x ** 2)
         P = self.partitionF(temperature, shiftedData)
-        Z2 = self.weightedMean(temperature, sqShiftedData) / P
-        Z =  (self.weightedMean(temperature, shiftedData) ** 2) / P
+        Z2 = self.weightedSqMean(temperature, shiftedData) / P
+        Z =  self.weightedMean(temperature, shiftedData) / P
         return ( Z2 - (Z ** 2) ) / ((temperature ** 2) * n)
 
     def computeLogReturns(self, back, ahead):
@@ -61,5 +66,5 @@ if __name__ == "__main__":
     stats = Stats()
     cols = ['energy', 'sqEnergy', 'mag', 'sqMag']
     allTemperatures = [float(x)/5 for x in range(1, 25)]
-    k = stats.computeSpecificHeats('./data/ising.random.periodic.100.{}.csv', cols, allTemperatures, 100*100)
+    k = stats.computeSpecificHeats('./data/ising.random.periodic.100.{}.csv', cols, allTemperatures, 100 * 100)
     print(k)
