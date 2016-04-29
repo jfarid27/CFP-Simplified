@@ -65,6 +65,17 @@ class Stats():
 if __name__ == "__main__":
     stats = Stats()
     cols = ['energy', 'sqEnergy', 'mag', 'sqMag']
-    allTemperatures = [float(x)/5 for x in range(1, 25)]
-    k = stats.computeSpecificHeats('./data/ising.random.periodic.100.{}.csv', cols, allTemperatures, 100 * 100)
-    print(k)
+    swTemps = [float(x)/10 for x in range(33, 50)]
+    periodicTemps = [float(x)/5 for x in range(5, 25)]
+    periodicSpecificHeats = stats.computeSpecificHeats('./data/ising.random.periodic.100.{}.csv', cols, periodicTemps, 100 * 100)
+    swSpecificHeats = stats.computeSpecificHeats('./data/small-world.random.10000.{}.csv', cols, swTemps, 100 * 100)
+    periodicFile = open('data/p.specificheat.csv', 'w')
+    swFile = open('data/sw.specificheat.csv', 'w')
+    for (point,temp) in periodicSpecificHeats:
+        data = str.format("{},{}\n", temp, point)
+        periodicFile.write(data)
+    for (point,temp) in swSpecificHeats:
+        data = str.format("{},{}\n", temp, point)
+        swFile.write(data)
+    periodicFile.close()
+    swFile.close()
